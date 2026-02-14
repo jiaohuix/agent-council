@@ -10,14 +10,15 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 # Council members - list of OpenRouter model identifiers
 COUNCIL_MODELS = [
-    "openai/gpt-5.1",
-    "google/gemini-3-pro-preview",
-    "anthropic/claude-sonnet-4.5",
-    "x-ai/grok-4",
+    "Qwen/Qwen3-8B",
+    "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
+    "internlm/internlm2_5-7b-chat",
 ]
+# TODO: Agent:MODEL_ID means the model is used by the agent.
 
 # Chairman model - synthesizes final response
-CHAIRMAN_MODEL = "google/gemini-3-pro-preview"
+CHAIRMAN_MODEL = "deepseek-ai/DeepSeek-V3.2"
+TITLE_MODEL = "internlm/internlm2_5-7b-chat"
 
 # OpenRouter API endpoint
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
