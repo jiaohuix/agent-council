@@ -1,12 +1,10 @@
 1 修改API，然后跑通silicon的council √
 2 litellm路由配置 √
 3 agno agent 配置集成，跑通agentos+openai endpoint；yaml管理提示词 (跑起来，仅仅跑起来就行了，配置多个模型，配置不同的提示词。灵活点，然后路由统一用litellm的API) √
-
-
-4 llm和agno统一接入agent-council，定下协议，llm/agent (agno sdk/openai sdk)
-5 端到端跑通mcp、agno、council启动、前端启动，测试问题
-6 提示词增加选择题的格式。方便外部的解析。
-7 start.sh修改，一键跑通：litellm、agno、council、前端（mcp单独）
+4 llm和agno统一接入agent-council，定下协议，llm/agent (agno sdk/openai sdk)√
+5 端到端跑通mcp、agno、council启动、前端启动，测试问题√
+6 提示词增加选择题的格式。方便外部的解析。注意输出语言和输入相同
+7 start.sh修改，一键跑通：litellm、agno、council、前端（mcp单独）√
 7 包装成openai兼容的sdk，可由外部调用，如evalscope评测框架
 evalscope/APP应用 ← Agent-Council ← agno agent（openai sdk） ← litellm（silicon/baichuan/glm…）
 
@@ -22,6 +20,14 @@ evalscope/APP应用 ← Agent-Council ← agno agent（openai sdk） ← litellm
 2 另外，Agno的prompt通过yaml管理 ，方便版本迭代。
 3 LLM-Council得支持两种类型的，一种是原生的llm，一种是Agent，可以同时接入，需要一个配置层。Agent-Council←（LLM/Agent）
 
+
+25/02/14 目前的问题：
+1 Rank信息没显示：Rank信息还没有生成，结果却提前显示了答案。
+语言不匹配：输出是英文的，应该与输入语言一致。
+多个Agent：需要添加多个Agent，而不是仅添加一个语言模型。
+分类提示词：分类提示词应输出最终答案（例如“C第5”）。
+输出速度慢：输出速度太慢，导致前端显示困难，用户几乎等不到结果。
+流式接口：需要实现流式输出接口，集成A诺的API并改进OpenAI的字符串类型处理，类似于阿格的Web UI，支持前后端。
 
 ## my readme
 
