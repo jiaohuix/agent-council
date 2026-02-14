@@ -8,6 +8,7 @@ echo ""
 # Start backend
 echo "Starting backend on http://localhost:8001..."
 uv run python -m backend.main &
+# uv run python -m backend.main --port 8080 &
 BACKEND_PID=$!
 
 # Wait a bit for backend to start
@@ -16,7 +17,8 @@ sleep 2
 # Start frontend
 echo "Starting frontend on http://localhost:5173..."
 cd frontend
-npm run dev &
+npm run dev  &
+# npm run dev -- --host 0.0.0.0 --port 3000
 FRONTEND_PID=$!
 
 echo ""

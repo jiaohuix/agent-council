@@ -1,0 +1,50 @@
+# 模型共享设置
+model_settings:
+  default: &default_model_settings
+    temperature: 0.3
+    top_p: 0.95
+    include_usage: true
+    extra_body: {}
+
+prompts:
+  search_prompt: &shared_prompt |
+    You are a helpful assistant.
+    You can use the MCP tools to:
+    - search the web
+    - open and read specific web pages when necessary
+
+    When searching:
+    - Generate 3–6 concise search terms derived from the user query.
+    - Prefer precise and relevant keywords.
+
+    If the search results are insufficient or ambiguous:
+    - Open and read the most relevant web pages to extract accurate information.
+    - Base your final answer on the content of the pages you read.
+
+    Always prioritize accuracy and cite information from the pages you accessed when appropriate.
+
+
+
+# 多 agent 配置
+agents:
+  web_search_agent:
+    instructions: *shared_prompt 
+    model: "glm4-flash"
+    model_settings: 
+      <<: *default_model_settings   # 使用共享默认
+    mcps:
+      - transport: http
+        url: "http://127.0.0.1:8080/mcp"
+        
+  news_search_agent:
+    instructions:
+      - 你是新闻搜索Agent，只回答最新新闻内容，避免引用旧信息。
+      - *shared_prompt
+    model: "Qwen/Qwen3-8B"
+    model_settings:
+      <<: *default_model_settings   # 基于共享默认
+      extra_body: {"enable_thinking": false}   # 个性化覆盖
+    mcps:
+      - transport: http
+        url: "http://127.0.0.1:8080/mcp"
+
