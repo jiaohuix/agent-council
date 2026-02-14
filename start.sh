@@ -19,7 +19,8 @@ fi
 
 # 1. 启动 LiteLLM 代理
 echo "[1/4] 启动 LiteLLM on http://localhost:4000..."
-python -m litellm --config litellm_config.yaml --port 4000 &
+litellm --config configs/litellm.yaml --port 4000 &
+
 LITELLM_PID=$!
 sleep 3
 
