@@ -11,6 +11,10 @@ wheels/
 
 # Keys and secrets
 .env
+/configs/litellm.yaml
+*.log
+logs/
+ref_codes/
 
 # Data files
 data/
