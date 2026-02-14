@@ -67,6 +67,11 @@ def create_mcp_tools(mcp_configs: list[dict]) -> list[MCPTools]:
             # streamable-http 对应 http transport
             if transport == "http":
                 transport = "streamable-http"
+            elif transport == "sse":
+                transport = "sse"
+            else:
+                logger.warning(f"不支持的 MCP transport: {transport}")
+                continue
             tools.append(MCPTools(transport=transport, url=url))
     return tools
 
@@ -143,12 +148,16 @@ async def list_models():
 
 @app.post("/v1/chat/completions")
 async def chat_completions(request: ChatRequest):
-    """OpenAI 兼容的 chat completions 接口"""
+    """OpenAI 兼容的 chat completions 接口
+    TODO:
+    1 支持多轮对话
+    2 支持stream
+    """
     agent = agent_map.get(request.model)
     if not agent:
         raise HTTPException(404, f"Agent '{request.model}' 不存在")
     
-    # 提取用户消息
+    # 提取用户消息(最后一条)
     user_msg = request.messages[-1]["content"] if request.messages else ""
     logger.info(f"[{request.model}] 请求: {user_msg[:100]}...")
     

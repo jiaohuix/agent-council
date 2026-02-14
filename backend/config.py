@@ -5,23 +5,28 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# OpenRouter API key
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+# ── LiteLLM 配置（统一 LLM 路由） ──
+LITELLM_BASE_URL = os.getenv("LITELLM_BASE_URL", "http://0.0.0.0:4000")
+LITELLM_API_KEY = os.getenv("LITELLM_API_KEY", "sk-123")
 
-# Council members - list of OpenRouter model identifiers
+# ── Agno Agent 配置 ──
+AGNO_BASE_URL = os.getenv("AGNO_BASE_URL", "http://0.0.0.0:8002")
+
+# ── 模型ID格式约定 ──
+# "agent:xxx"        → Agno Agent (OpenAI兼容接口)
+# "agent-native:xxx" → Agno Agent (原生runs接口)
+# 其他               → LiteLLM 普通模型
+
+# Council 成员 - 支持混合 LLM 和 Agent
 COUNCIL_MODELS = [
-    "Qwen/Qwen3-8B",
-    "deepseek-ai/DeepSeek-R1-0528-Qwen3-8B",
-    "internlm/internlm2_5-7b-chat",
+    "glm4-flash",                    # LiteLLM 模型
+    "agent:web_search_agent",        # Agno Agent (OpenAI接口)
+    # "agent-native:web_search_agent", # Agno Agent (原生接口)
 ]
-# TODO: Agent:MODEL_ID means the model is used by the agent.
 
-# Chairman model - synthesizes final response
-CHAIRMAN_MODEL = "deepseek-ai/DeepSeek-V3.2"
-TITLE_MODEL = "internlm/internlm2_5-7b-chat"
+# 主席模型 - 生成最终回复
+CHAIRMAN_MODEL = "glm4-flash"
+TITLE_MODEL = "agent-native:web_search_agent"
 
-# OpenRouter API endpoint
-OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-
-# Data directory for conversation storage
+# 数据存储目录
 DATA_DIR = "data/conversations"
