@@ -72,7 +72,7 @@ agents:
   # ---------- Model 3 ----------
   search_agent3:
     instructions: *shared_search_prompt
-    model: "glm4.7-flash"
+    model: "glm4-flash"
     model_settings:
       <<: *default_model_settings
       temperature: 0.2

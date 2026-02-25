@@ -35,7 +35,7 @@ COUNCIL_AGENTS = [
 COUNCIL_MODELS = [
     "qwen3-32b",
     "dpsk3.2",
-    "glm4.7-flash"
+    "glm4-flash"
 ]
 
 # 主席模型 - 生成最终回复
