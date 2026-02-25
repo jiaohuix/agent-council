@@ -17,5 +17,29 @@ model_list:
       model: openai/Qwen/Qwen3-8B
       api_base: https://api.siliconflow.cn/v1
       api_key: sk-3
-
-
+  - model_name: dpsk3.2
+    litellm_params: 
+      model: openai/deepseek-ai/DeepSeek-V3.2
+      api_base: https://api.siliconflow.cn/v1
+      api_key: sk-
+  - model_name: glm5
+    litellm_params: 
+      model: openai/Pro/zai-org/GLM-5
+      api_base: https://api.siliconflow.cn/v1
+      api_key: sk-
+  - model_name: qwen3-32b
+    litellm_params: 
+      model: openai/Qwen/Qwen3-32B
+      api_base: https://api.siliconflow.cn/v1
+      api_key: sk-
+  - model_name: dpsk3.2
+    litellm_params: 
+      model: openai/deepseek-ai/DeepSeek-V3.2
+      api_base: https://api.siliconflow.cn/v1
+      api_key: sk-
+  - model_name: glm5
+    litellm_params: 
+      model: openai/Pro/zai-org/GLM-5
+      api_base: https://api.siliconflow.cn/v1
+      api_key: sk-
+      

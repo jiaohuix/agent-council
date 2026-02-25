@@ -17,16 +17,30 @@ AGNO_BASE_URL = os.getenv("AGNO_BASE_URL", "http://0.0.0.0:8002")
 # "agent-native:xxx" → Agno Agent (原生runs接口)
 # 其他               → LiteLLM 普通模型
 
-# Council 成员 - 支持混合 LLM 和 Agent
+# Council 成员（Agent） - 支持混合 LLM 和 Agent 
+# COUNCIL_AGENTS = [
+#     "glm4-flash",                    # LiteLLM 模型
+#     "agent:web_search_agent",        # Agno Agent (OpenAI接口)
+#     # "agent-native:web_search_agent", # Agno Agent (原生接口)
+# ]
+
+# 参考agent-council/configs/agents.yaml
+COUNCIL_AGENTS = [
+    "agent:search_agent1", 
+    "agent:search_agent2", 
+    "agent:search_agent3", 
+]
+
+# Council 成员(纯LLM)
 COUNCIL_MODELS = [
-    "glm4-flash",                    # LiteLLM 模型
-    "agent:web_search_agent",        # Agno Agent (OpenAI接口)
-    # "agent-native:web_search_agent", # Agno Agent (原生接口)
+    "qwen3-32b",
+    "dpsk3.2",
+    "glm4.7-flash"
 ]
 
 # 主席模型 - 生成最终回复
-CHAIRMAN_MODEL = "glm4-flash"
-TITLE_MODEL = "agent-native:web_search_agent"
+CHAIRMAN_MODEL = "glm5"
+TITLE_MODEL = "qwen3-8b"
 
 # 数据存储目录
 DATA_DIR = "data/conversations"

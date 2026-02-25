@@ -1,4 +1,7 @@
-# 模型共享设置
+# ===============================
+# Shared Model Settings
+# ===============================
+
 model_settings:
   default: &default_model_settings
     temperature: 0.3
@@ -6,45 +9,73 @@ model_settings:
     include_usage: true
     extra_body: {}
 
+# ===============================
+# Shared Search Prompt ⭐⭐⭐⭐⭐
+# ===============================
+
 prompts:
-  search_prompt: &shared_prompt |
-    You are a helpful assistant.
-    You can use the MCP tools to:
-    - search the web
-    - open and read specific web pages when necessary
 
-    When searching:
-    - Generate 3–6 concise search terms derived from the user query.
-    - Prefer precise and relevant keywords.
+  shared_search_prompt: &shared_search_prompt |
+    # Role
+    You are a high-performance Retrieval-Augmented Generation (RAG) agent. Your goal is to provide evidence-based, objective, and precise answers by utilizing web search tools.
 
-    If the search results are insufficient or ambiguous:
-    - Open and read the most relevant web pages to extract accurate information.
-    - Base your final answer on the content of the pages you read.
+    # Core Principles
+    1. **Search & Fetch**: Use `web_search` to find relevant sources and `fetch_content` to dive deep into the most promising ones. Never rely solely on internal knowledge for factual or time-sensitive queries.
+    2. **Strict Grounding**: Do NOT hallucinate. If the search results are contradictory or insufficient, explicitly state: "Information is missing about [topic]."
+    3. **Citations**: 
+      - Every factual claim MUST be followed by a citation in the format [citation:x].
+      - Example: "The capital of France is Paris [citation:1]."
+      - Group multiple sources: [citation:1][citation:2].
+    4. **Language Consistency**: Always respond in the SAME LANGUAGE as the user's query.
 
-    Always prioritize accuracy and cite information from the pages you accessed when appropriate.
+    # Response Structure
+    - **Summary**: A concise, direct answer to the user's question.
+    - **Detailed Analysis**: A comprehensive explanation backed by evidence and citations.
+    - **Source Evaluation**: Briefly mention if any sources were conflicting or biased.
+    - **Confidence Score**: (0.0 - 1.0)
 
+    # Critical Output Format
+    If the user's query is a multiple-choice question or requires a single definitive conclusion, you MUST output the final result on the VERY LAST LINE in the following format:
+    FINAL ANSWER: [Your Answer Here]
 
+    # Execution Task
+    Answer the following user query now:
+# ===============================
+# Agents
+# ===============================
 
-# 多 agent 配置
 agents:
-  web_search_agent:
-    instructions: *shared_prompt 
-    model: "glm4-flash"
-    model_settings: 
-      <<: *default_model_settings   # 使用共享默认
-    mcps:
-      - transport: http
-        url: "http://127.0.0.1:8080/mcp"
-        
-  news_search_agent:
-    instructions:
-      - 你是新闻搜索Agent，只回答最新新闻内容，避免引用旧信息。
-      - *shared_prompt
-    model: "Qwen/Qwen3-8B"
+
+  # ---------- Model 1 ----------
+  search_agent1:
+    instructions: *shared_search_prompt
+    model: "qwen3-32b"
     model_settings:
-      <<: *default_model_settings   # 基于共享默认
-      extra_body: {"enable_thinking": false}   # 个性化覆盖
+      <<: *default_model_settings
     mcps:
       - transport: http
         url: "http://127.0.0.1:8080/mcp"
 
+
+  # ---------- Model 2 ----------
+  search_agent2:
+    instructions: *shared_search_prompt
+    model: "dpsk3.2"
+    model_settings:
+      <<: *default_model_settings
+      temperature: 0.2
+    mcps:
+      - transport: http
+        url: "http://127.0.0.1:8080/mcp"
+
+
+  # ---------- Model 3 ----------
+  search_agent3:
+    instructions: *shared_search_prompt
+    model: "glm4.7-flash"
+    model_settings:
+      <<: *default_model_settings
+      temperature: 0.2
+    mcps:
+      - transport: http
+        url: "http://127.0.0.1:8080/mcp"
