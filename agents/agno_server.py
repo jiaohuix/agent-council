@@ -111,6 +111,7 @@ def create_agents(config: dict) -> list[Agent]:
             tools=mcp_tools,
             instructions=normalize_instructions(agent_cfg.get("instructions")),
             markdown=True,
+            debug_mode = True,
         )
         agents.append(agent)
         logger.info(f"创建 Agent: {agent_id}, 模型: {agent_cfg.get('model')}")

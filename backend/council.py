@@ -2,7 +2,7 @@
 
 from typing import List, Dict, Any, Tuple
 from .openrouter import query_models_parallel, query_model
-from .config import COUNCIL_AGENTS,COUNCIL_MODELS, CHAIRMAN_MODEL, TITLE_MODEL
+from .config import COUNCIL_AGENTS,COUNCIL_MODELS, CHAIRMAN_MODEL, TITLE_MODEL, AGENT_TIMEOUT
 
 
 async def stage1_collect_responses(user_query: str) -> List[Dict[str, Any]]:
@@ -16,9 +16,10 @@ async def stage1_collect_responses(user_query: str) -> List[Dict[str, Any]]:
         List of dicts with 'model' and 'response' keys
     """
     messages = [{"role": "user", "content": user_query}]
+    print("AGENT_TIMEOUT in stage1",AGENT_TIMEOUT)
 
     # Query all models in parallel
-    responses = await query_models_parallel(COUNCIL_AGENTS, messages)
+    responses = await query_models_parallel(COUNCIL_AGENTS, messages, timeout=AGENT_TIMEOUT)
 
     # Format results
     stage1_results = []

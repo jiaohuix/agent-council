@@ -22,7 +22,7 @@ echo "[1/4] 启动 LiteLLM on http://localhost:4000..."
 litellm --config configs/litellm.yaml --port 4000 &
 
 LITELLM_PID=$!
-sleep 3
+sleep 5
 
 # 2. 启动 Agno Agent 服务
 echo "[2/4] 启动 Agno Agent on http://localhost:8002..."

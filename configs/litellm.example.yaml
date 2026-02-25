@@ -42,4 +42,10 @@ model_list:
       model: openai/Pro/zai-org/GLM-5
       api_base: https://api.siliconflow.cn/v1
       api_key: sk-
-      
+  - model_name: kimi-k2.5
+    litellm_params: 
+      model: openai/Pro/moonshotai/Kimi-K2.5
+      api_base: https://api.siliconflow.cn/v1
+      api_key: sk-
+
+

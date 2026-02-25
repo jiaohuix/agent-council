@@ -100,6 +100,7 @@ async def query_model(
     统一查询接口，根据模型ID自动路由
     """
     model_type, actual_id = parse_model_id(model)
+    print(f"[TIMEOUT时长]：{timeout}")
 
     try:
         if model_type == "agent":
@@ -115,9 +116,11 @@ async def query_model(
 
 async def query_models_parallel(
     models: List[str],
-    messages: List[Dict[str, str]]
+    messages: List[Dict[str, str]],
+    timeout: float = 120.0
 ) -> Dict[str, Optional[Dict[str, Any]]]:
     """并行查询多个模型"""
-    tasks = [query_model(model, messages) for model in models]
+    print("timeout query_models_parallel", timeout)
+    tasks = [query_model(model, messages, timeout) for model in models]
     responses = await asyncio.gather(*tasks)
     return {model: resp for model, resp in zip(models, responses)}
