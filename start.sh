@@ -5,6 +5,21 @@
 echo "启动 Agent Council..."
 echo ""
 
+# 端口列表
+PORTS=(4000 8002 8001 5173)
+
+echo "检查并关闭可能残留的服务进程..."
+
+for PORT in "${PORTS[@]}"; do
+    PID=$(lsof -ti tcp:$PORT)
+    if [ ! -z "$PID" ]; then
+        echo "→ 关闭端口 $PORT 上的进程 $PID"
+        kill -9 $PID 2>/dev/null
+    fi
+done
+
+sleep 2
+
 # 获取脚本所在目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"

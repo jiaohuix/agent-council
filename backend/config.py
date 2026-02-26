@@ -11,7 +11,7 @@ LITELLM_API_KEY = os.getenv("LITELLM_API_KEY", "sk-123")
 
 # ── Agno Agent 配置 ──
 AGNO_BASE_URL = os.getenv("AGNO_BASE_URL", "http://0.0.0.0:8002")
-AGENT_TIMEOUT = 360
+AGENT_TIMEOUT = 600
 
 # ── 模型ID格式约定 ──
 # "agent:xxx"        → Agno Agent (OpenAI兼容接口)
@@ -32,15 +32,22 @@ COUNCIL_AGENTS = [
     "agent:search_agent3", 
 ]
 
+
 # Council 成员(纯LLM)
 COUNCIL_MODELS = [
     "qwen3-32b",
     "dpsk3.2",
-    "glm4-flash"
+    # "glm4-flash",
+    # "kimi-k2.5"
+    "glm4.6"
 ]
+# COUNCIL_AGENTS = COUNCIL_MODELS
 
 # 主席模型 - 生成最终回复
-CHAIRMAN_MODEL = "kimi-k2.5"
+# CHAIRMAN_MODEL = "kimi-k2.5"
+# CHAIRMAN_MODEL = "glm4-flash"
+CHAIRMAN_MODEL = "dpsk3.2"
+
 TITLE_MODEL = "qwen3-8b"
 
 # 数据存储目录

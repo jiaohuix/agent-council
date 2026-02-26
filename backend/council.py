@@ -17,7 +17,8 @@ async def stage1_collect_responses(user_query: str) -> List[Dict[str, Any]]:
     """
     messages = [{"role": "user", "content": user_query}]
     print("AGENT_TIMEOUT in stage1",AGENT_TIMEOUT)
-
+    print("=== DEBUG: 使用了 timeout =", AGENT_TIMEOUT, "正在调用 query_models_parallel ===")
+    
     # Query all models in parallel
     responses = await query_models_parallel(COUNCIL_AGENTS, messages, timeout=AGENT_TIMEOUT)
 

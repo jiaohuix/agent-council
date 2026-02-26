@@ -72,10 +72,22 @@ agents:
   # ---------- Model 3 ----------
   search_agent3:
     instructions: *shared_search_prompt
-    model: "glm4-flash"
+    model: "glm4.6"
     model_settings:
       <<: *default_model_settings
       temperature: 0.2
     mcps:
       - transport: http
         url: "http://127.0.0.1:8080/mcp"
+  
+  # ---------- Model 4 ----------
+  search_agent4:
+    instructions: *shared_search_prompt
+    model: "kimi-k2.5"
+    model_settings:
+      <<: *default_model_settings
+      temperature: 0.2
+    mcps:
+      - transport: http
+        url: "http://127.0.0.1:8080/mcp"
+      

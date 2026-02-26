@@ -94,7 +94,7 @@ async def _query_agno_native(
 async def query_model(
     model: str,
     messages: List[Dict[str, str]],
-    timeout: float = 120.0
+    timeout: float = 300
 ) -> Optional[Dict[str, Any]]:
     """
     统一查询接口，根据模型ID自动路由
@@ -117,7 +117,7 @@ async def query_model(
 async def query_models_parallel(
     models: List[str],
     messages: List[Dict[str, str]],
-    timeout: float = 120.0
+    timeout: float = 360.0
 ) -> Dict[str, Optional[Dict[str, Any]]]:
     """并行查询多个模型"""
     print("timeout query_models_parallel", timeout)

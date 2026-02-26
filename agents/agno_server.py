@@ -72,7 +72,7 @@ def create_mcp_tools(mcp_configs: list[dict]) -> list[MCPTools]:
             else:
                 logger.warning(f"不支持的 MCP transport: {transport}")
                 continue
-            tools.append(MCPTools(transport=transport, url=url))
+            tools.append(MCPTools(transport=transport, url=url, timeout_seconds=30))
     return tools
 
 
@@ -109,6 +109,7 @@ def create_agents(config: dict) -> list[Agent]:
             id = agent_id,
             model=llm,
             tools=mcp_tools,
+            # tool_call_limit=3,
             instructions=normalize_instructions(agent_cfg.get("instructions")),
             markdown=True,
             debug_mode = True,
